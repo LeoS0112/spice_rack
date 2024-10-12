@@ -1,18 +1,9 @@
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
 import json
 from enum import Enum
 
-app = FastAPI()
+from flask import Flask
 
-# CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = Flask(__name__)
 
 class Spice(Enum):
     Cumin = 0
@@ -25,11 +16,16 @@ def getSpiceDict(spiceList: str):
     print(spiceDict)
     return spiceDict
 
-@app.get("/spices/{spiceList}")
-async def gen_spice_list(
-        spiceList: str
-):
-    print(spiceList)
-    current_spices = getSpiceDict(spiceList)
-    return {"current spices:", str(list(current_spices.values()))}
+@app.route("/")
+def homepage():
+    return "Running"
+
+@app.route('/spices/<string>')
+def index(string):
+    return string
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
+
+
 
