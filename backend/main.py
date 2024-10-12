@@ -57,6 +57,15 @@ def read_last_line_spice_data_csv():
             last_line = line
     return last_line
 
+def make_string(spices_changed, current_spices):
+    to_return = ""
+    for spice in spices_changed:
+        if int(current_spices[spice.value]) == 0:
+            to_return += Spice.name + " has been removed "
+        else:
+            to_return += Spice.name + " has been returned "
+    return to_return
+
 @app.route("/")
 def homepage():
     return "Running"
@@ -70,11 +79,11 @@ def index(string):
     last_row = read_last_line_spice_data_csv()
     last_row_spices = list(last_row[1])
     diff = list(i[0] == i[1] for i in zip(last_row_spices, list(string[:24])))
-    spices_moved = list(Spice(i).name for i in range(len(Spice)) if not diff[i])
+    spices_changed = list(Spice(i) for i in range(len(Spice)) if not diff[i])
     write_spice_data_to_csv(string)
     payload = {
         "chatId": "120363251450617955@g.us",
-        "message": str(spices_moved)
+        "message": make_string(spices_changed, string[:24])
     }
     headers = {
         'Content-Type': 'application/json'
