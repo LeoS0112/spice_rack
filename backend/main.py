@@ -5,6 +5,7 @@ from flask import Flask
 import csv
 import Path
 
+Spice_Data_CSV_Path = "/home/leo/spice_data.csv"
 app = Flask(__name__)
 
 class Spice(Enum):
@@ -42,8 +43,7 @@ def getSpiceDict(spiceList: str):
 
 def write_spice_data_to_csv(spice_list: str):
     current_time = time.time() # seconds after epoch
-    file_path = "/home/leo/spice_data.csv"
-    with open(file_path, mode='a') as file:
+    with open(Spice_Data_CSV_Path, mode='a') as file:
         writer = csv.writer(file)
         writer.writerow([current_time, spice_list])
 @app.route("/")
