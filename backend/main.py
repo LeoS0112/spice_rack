@@ -11,6 +11,8 @@ class Spice(Enum):
     Thyme = 2
     Herbes_De_Province = 3
     Marjoram = 4
+    Tarragon = 5
+
 
 def getSpiceDict(spiceList: str):
     spiceDict = {Spice.Cumin: 0, Spice.Turmeric: 0}
