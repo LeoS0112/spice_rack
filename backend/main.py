@@ -3,7 +3,6 @@ from enum import Enum
 import time
 from flask import Flask
 import csv
-import Path
 
 Spice_Data_CSV_Path = "/home/leo/spice_data.csv"
 app = Flask(__name__)
