@@ -3,6 +3,21 @@ from enum import Enum
 import time
 from flask import Flask
 import csv
+import requests
+
+url = "https://7103.api.greenapi.com/waInstance7103133296/sendMessage/f9f18859c9a54c7999b81998f957010043b8ce17d5044428ad"
+
+payload = {
+    "chatId": "120363048118827539@g.us",
+    "message": "Spice rack here: This is from the spice rack - that's crazy, I know"
+}
+headers = {
+    'Content-Type': 'application/json'
+}
+
+response = requests.post(url, json=payload, headers=headers)
+
+print(response.text.encode('utf8'))
 
 Spice_Data_CSV_Path = "/home/leo/spice_data.csv"
 app = Flask(__name__)
@@ -30,7 +45,7 @@ class Spice(Enum):
     Garlic_Granules = 19
     Cinnamon_Sticks = 20
     Ground_Sweet_Cinnamon = 21
-    Ground__Cinnamon = 22
+    Ground_Cinnamon = 22
     Star_Anise = 23
 
 def getSpiceDict(spiceList: str):
