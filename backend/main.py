@@ -68,9 +68,9 @@ def index(string):
         if int(string[i]) == 0:
             print(Spice(i).name)
     last_row = read_last_line_spice_data_csv()
-    print(last_row)
-    diff = list(i[0] == i[1] for i in zip(list(last_row[1]), list(string[:24])))
-    spices_moved = list(Spice(i).name for i in range(len(Spice)) if diff[i] == 1)
+    last_row_spices = list(last_row[1])
+    diff = list(i[0] == i[1] for i in zip(last_row_spices, list(string[:24])))
+    spices_moved = list(Spice(i).name for i in range(len(Spice)) if not diff[i])
     write_spice_data_to_csv(string)
     payload = {
         "chatId": "120363251450617955@g.us",
