@@ -7,15 +7,7 @@ import requests
 
 url = "https://7103.api.greenapi.com/waInstance7103133296/sendMessage/f9f18859c9a54c7999b81998f957010043b8ce17d5044428ad"
 
-payload = {
-    "chatId": "120363048118827539@g.us",
-    "message": "Spice rack here: This is from the spice rack - that's crazy, I know"
-}
-headers = {
-    'Content-Type': 'application/json'
-}
 
-response = requests.post(url, json=payload, headers=headers)
 
 print(response.text.encode('utf8'))
 
@@ -60,6 +52,14 @@ def write_spice_data_to_csv(spice_list: str):
     with open(Spice_Data_CSV_Path, mode='a') as file:
         writer = csv.writer(file)
         writer.writerow([current_time, spice_list])
+
+def read_last_line_spice_data_csv():
+    with open(Spice_Data_CSV_Path, mode='r') as file:
+        reader = csv.reader(file)
+        for line in reader:
+            last_line = line
+    return last_line
+
 @app.route("/")
 def homepage():
     return "Running"
@@ -70,7 +70,19 @@ def index(string):
     for i in range(len(Spice)):
         if int(string[i]) == 0:
             print(Spice(i).name)
+    last_row = read_last_line_spice_data_csv()
+    diff = list(i[0] == i[1] for i in zip(list(last_row), list(string[:24])))
+    spices_moved = list(Spice(i).name if i == 1 for i in range(len(Spice)))
     write_spice_data_to_csv(string)
+    payload = {
+        "chatId": "120363251450617955@g.us",
+        "message": str(spices_moved)
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
     return string
 
 if __name__ == '__main__':
