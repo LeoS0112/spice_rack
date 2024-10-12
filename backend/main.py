@@ -3,6 +3,7 @@ from enum import Enum
 import time
 from flask import Flask
 import csv
+import Path
 
 app = Flask(__name__)
 
@@ -41,8 +42,8 @@ def getSpiceDict(spiceList: str):
 
 def write_spice_data_to_csv(spice_list: str):
     current_time = time.time() # seconds after epoch
-    file_name = "spice_data.csv"
-    with open(file_name, mode='a') as file:
+    file_path = "/home/leo/spice_data.csv"
+    with open(file_path, mode='a') as file:
         writer = csv.writer(file)
         writer.writerow([current_time, spice_list])
 @app.route("/")
