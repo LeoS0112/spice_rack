@@ -69,7 +69,7 @@ def index(string):
             print(Spice(i).name)
     last_row = read_last_line_spice_data_csv()
     print(last_row)
-    diff = list(i[0] == i[1] for i in zip(list(last_row), list(string[:24])))
+    diff = list(i[0] == i[1] for i in zip(list(last_row[1]), list(string[:24])))
     spices_moved = list(Spice(i).name for i in range(len(Spice)) if diff[i] == 1)
     write_spice_data_to_csv(string)
     payload = {
