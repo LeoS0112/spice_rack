@@ -55,6 +55,7 @@ def index(string):
     for i in range(len(Spice)):
         if int(string[i]) == 0:
             print(Spice(i).name)
+    write_spice_data_to_csv(string)
     return string
 
 if __name__ == '__main__':
