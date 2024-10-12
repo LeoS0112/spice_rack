@@ -6,8 +6,11 @@ from flask import Flask
 app = Flask(__name__)
 
 class Spice(Enum):
-    Cumin = 0
-    Turmeric = 1
+    Basil = 0
+    Oregano = 1
+    Thyme = 2
+    Herbes_De_Province = 3
+    Marjoram = 4
 
 def getSpiceDict(spiceList: str):
     spiceDict = {Spice.Cumin: 0, Spice.Turmeric: 0}
@@ -22,6 +25,10 @@ def homepage():
 
 @app.route('/spices/<string>')
 def index(string):
+    print(string)
+    for i in range(5):
+        if string[i] == 0:
+            print(Spice[i].name)
     return string
 
 if __name__ == '__main__':
