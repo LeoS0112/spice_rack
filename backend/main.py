@@ -61,9 +61,9 @@ def make_string(spices_changed, current_spices):
     to_return = ""
     for spice in spices_changed:
         if int(current_spices[spice.value]) == 0:
-            to_return += Spice.name + " has been removed "
+            to_return += spice.name + " has been removed "
         else:
-            to_return += Spice.name + " has been returned "
+            to_return += spice.name + " has been returned "
     return to_return
 
 @app.route("/")
