@@ -8,9 +8,6 @@ import requests
 url = "https://7103.api.greenapi.com/waInstance7103133296/sendMessage/f9f18859c9a54c7999b81998f957010043b8ce17d5044428ad"
 
 
-
-print(response.text.encode('utf8'))
-
 Spice_Data_CSV_Path = "/home/leo/spice_data.csv"
 app = Flask(__name__)
 
