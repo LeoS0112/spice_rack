@@ -120,10 +120,10 @@ def homepage():
 @app.route('/spices/<spice_list>')
 def index(spice_list):
     write_spice_data_to_csv(spice_list)
-    last_avail_times = find_last_avail_time()
+    last_avail_times, prev_last_avail_times = find_last_avail_time()
     current_time = time.time() # seconds after epoch
     missing_spices = [1 if current_time - last_avail_times[i] > 10000 else 0 for i in range(len(Spice))]
-    prev_missing_spices = [0 if current_time - last_avail_times[i] > 10000 else 1 for i in range(len(Spice))]
+    prev_missing_spices = [0 if current_time - prev_last_avail_times[i] > 10000 else 1 for i in range(len(Spice))]
     missing_spices &= prev_missing_spices
     to_send = make_string_to_buy(missing_spices)
     print(last_avail_times)
