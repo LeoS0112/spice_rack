@@ -67,7 +67,7 @@ def find_last_avail_time():
             current_time = int(float(row[0]))
             current_spices = row[1]
             for i in range(len(Spice)):
-                if (current_spices[i] == 1) & (last_avail[i] == 0):
+                if (current_spices[i] == '1') & (last_avail[i] == 0):
                     last_avail[i] = current_time
             if all(last_avail):
                 break
