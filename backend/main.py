@@ -71,7 +71,19 @@ def find_last_avail_time():
                     last_avail[i] = current_time
             if all(last_avail):
                 break
-    return last_avail
+
+        prev_last_avail = list(0 for i in range(len(Spice)))
+        for row in reversed(rows[:-1]):
+
+            current_time = int(float(row[0]))
+            current_spices = row[1]
+            for i in range(len(Spice)):
+                if (current_spices[i] == '1') & (prev_last_avail[i] == 0):
+                    prev_last_avail[i] = current_time
+            if all(prev_last_avail):
+                break
+
+    return last_avail, prev_last_avail
 
 def make_string_difference(spices_changed, current_spices):
     to_return = ""
@@ -111,6 +123,8 @@ def index(spice_list):
     last_avail_times = find_last_avail_time()
     current_time = time.time() # seconds after epoch
     missing_spices = [1 if current_time - last_avail_times[i] > 10000 else 0 for i in range(len(Spice))]
+    prev_missing_spices = [0 if current_time - last_avail_times[i] > 10000 else 1 for i in range(len(Spice))]
+    missing_spices &= prev_missing_spices
     to_send = make_string_to_buy(missing_spices)
     print(last_avail_times)
     print(current_time)
