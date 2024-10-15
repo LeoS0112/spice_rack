@@ -131,6 +131,7 @@ def index(spice_list):
     print(to_send)
     print(missing_spices)
     if to_send is None:
+        print("Here")
         return
     payload = {
         "chatId": "120363251450617955@g.us",
