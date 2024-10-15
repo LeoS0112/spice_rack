@@ -112,6 +112,7 @@ def index(spice_list):
     current_time = time.time() # seconds after epoch
     missing_spices = [1 if current_time - last_avail_times[i] > 10000 else 0 for i in range(len(Spice))]
     to_send = make_string_to_buy(missing_spices)
+    print(to_send)
     if to_send is None:
         return
     payload = {
