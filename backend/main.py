@@ -1,12 +1,9 @@
 import json
 from enum import Enum
 import time
-
-from PyQt5.QtCore.QUrl import toAce
 from flask import Flask
 import csv
 import requests
-from sqlalchemy.sql.functions import current_time
 
 url = "https://7103.api.greenapi.com/waInstance7103133296/sendMessage/f9f18859c9a54c7999b81998f957010043b8ce17d5044428ad"
 
