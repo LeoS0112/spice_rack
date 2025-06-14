@@ -1,7 +1,7 @@
 import json
 from enum import Enum
 import time
-from flask import Flask
+from flask import Flask, jsonify
 import csv
 import requests
 
@@ -130,18 +130,35 @@ def index(spice_list):
     print(current_time)
     print(to_send)
     print(missing_spices)
-    if to_send is None:
-        return spice_list
-    payload = {
-        "chatId": "120363251450617955@g.us",
-        "message": to_send
-    }
-    headers = {
-        'Content-Type': 'application/json'
-    }
-
-    response = requests.post(url, json=payload, headers=headers)
+    # if to_send is None:
+    #     return spice_list
+    # payload = {
+    #     "chatId": "120363251450617955@g.us",
+    #     "message": to_send
+    # }
+    # headers = {
+    #     'Content-Type': 'application/json'
+    # }
+    #
+    # response = requests.post(url, json=payload, headers=headers)
     return spice_list
+
+@app.route('/spices', methods=['GET'])
+def get_current_spices():
+    try:
+        last_row = read_last_line_spice_data_csv()
+        spice_list = last_row[1]
+        spice_dict = getSpiceDict(spice_list)
+        readable_spice_status = {
+            spice.name: 'Present' if available else 'Missing'
+            for spice, available in spice_dict.items()
+        }
+        return jsonify({
+            'timestamp': last_row[0],
+            'spice_status': readable_spice_status
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
