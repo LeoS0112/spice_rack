@@ -145,6 +145,7 @@ def index(spice_list):
 
 @app.route('/spices', methods=['GET'])
 def get_current_spices():
+    print("Getting current spices")
     try:
         last_row = read_last_line_spice_data_csv()
         spice_list = last_row[1]
