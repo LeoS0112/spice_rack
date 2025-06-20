@@ -1,7 +1,7 @@
 import json
 from enum import Enum
 import time
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, send_file
 import csv
 import requests
 
@@ -146,6 +146,18 @@ def index(spice_list):
 @app.route('/spices', methods=['GET'])
 def get_current_spices():
     print("Getting current spices")
+
+    # If user passes ?download=true, send the CSV file directly
+    if request.args.get('download') == 'true':
+        try:
+            return send_file(Spice_Data_CSV_Path,
+                             mimetype='text/csv',
+                             as_attachment=True,
+                             download_name='spice_data.csv')
+        except Exception as e:
+            return jsonify({'error': f'File send failed: {str(e)}'}), 500
+
+    # Otherwise, return JSON status
     try:
         last_row = read_last_line_spice_data_csv()
         spice_list = last_row[1]
